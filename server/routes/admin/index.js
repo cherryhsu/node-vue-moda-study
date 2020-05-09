@@ -37,4 +37,12 @@ module.exports = app => {
         req.Model = require(`../../models/${modelName}`)
         next()
     }, router)
+
+    const multer = require('multer')//将上传文件的数据赋值到req上
+    const upload = multer({ dest: __dirname + '/../../uploads' })//当前文件所在文件夹
+    app.post('/admin/api/upload', upload.single('file'), async (req, res) => {
+        const file = req.file
+        res.send(file)
+
+    })
 }
