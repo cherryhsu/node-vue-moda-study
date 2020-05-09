@@ -30,7 +30,7 @@ export default {
   },
   methods: {
     async fetch() {
-      const res = await this.$http.get("categories");
+      const res = await this.$http.get("rest/categories");
       this.tableData = res.data;
     },
     async del(scope) {
@@ -39,7 +39,7 @@ export default {
         cancelButtonText: "取消",
         type: "warning"
       }).then(async () => {
-        const res = await this.$http.delete(`categories/${scope._id}`);
+        const res = await this.$http.delete(`rest/categories/${scope._id}`);
         this.$message({
           type: "success",
           message: "删除成功!"

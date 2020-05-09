@@ -40,23 +40,23 @@ export default {
     async save() {
       let res;
       if (this.id) {
-        res = await this.$http.post(`categories/${this.id}`, this.model);
+        res = await this.$http.post(`rest/categories/${this.id}`, this.model);
       } else {
-        res = await this.$http.post("categories", this.model);
+        res = await this.$http.post("rest/categories", this.model);
       }
 
-      this.$router.push("/categories/list");
+      this.$router.push("rest/categories/list");
       this.$message({
         type: "success",
         message: "提交成功"
       });
     },
     async fetch() {
-      const res = await this.$http.get(`categories/${this.id}`);
+      const res = await this.$http.get(`rest/categories/${this.id}`);
       this.model = res.data;
     },
     async fetchParentOptions() {
-      const res = await this.$http.get(`categories`);
+      const res = await this.$http.get(`rest/categories`);
       this.parentOptions = res.data;
     }
   }
