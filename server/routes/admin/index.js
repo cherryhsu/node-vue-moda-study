@@ -17,7 +17,7 @@ module.exports = app => {
         })//将结果发送到前端
     })
     router.get('/categories', async (req, res) => {
-        const data = await Category.find().limit(10)//查询,限制10条
+        const data = await Category.find().populate('parent').limit(10)//查询,限制10条,populate关联字段对象
         res.send(data)//将结果发送到前端
     })
     router.get('/categories/:id', async (req, res) => {
