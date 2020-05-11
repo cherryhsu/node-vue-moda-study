@@ -47,8 +47,9 @@ export default {
     this.id && this.fetch(); //id存在时执行该方法
   },
   methods: {
-    handleAvatarSuccess(){
-
+    handleAvatarSuccess(res) {
+      this.$set(this.model, "icon", res.url);
+      //this.model.icon = res.url;
     },
     async save() {
       let res;
@@ -87,7 +88,7 @@ export default {
   color: #8c939d;
   width: 178px;
   height: 178px;
-  line-height: 178px;
+  line-height: 178px !important;
   text-align: center;
 }
 .avatar {
