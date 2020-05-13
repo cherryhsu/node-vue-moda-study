@@ -188,13 +188,13 @@ export default {
 .avatar-uploader-icon {
   font-size: 28px;
   color: #8c939d;
-  width: 5rem;
+  min-width: 5rem;
   height: 5rem;
   line-height: 5rem !important;
   text-align: center;
 }
 .avatar {
-  width: 5rem;
+  min-width: 5rem;
   height: 5rem;
   display: block;
 }
