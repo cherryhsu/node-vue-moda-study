@@ -7,35 +7,30 @@ module.exports = app => {
     const router = express.Router({
         mergeParams: true//合并url参数
     })
+    //登录校验
+    const authMiddleware = require("../../middleware/auth")
+    const resourceMiddleware = require("../../middleware/resource")
     //const Category = require('../../models/Category')
     //创建
-    router.post('/', async (req, res) => {
+    router.post('/', authMiddleware(), async (req, res) => {
         const model = await req.Model.create(req.body)//创建
         res.send(model)//将结果发送到前端
     })
     //查询
-    router.post('/:id', async (req, res) => {
+    router.post('/:id', authMiddleware(), async (req, res) => {
         const model = await req.Model.findByIdAndUpdate(req.params.id, req.body)//更新
         res.send(model)//将结果发送到前端
     })
     //删除
-    router.delete('/:id', async (req, res) => {
+    router.delete('/:id', authMiddleware(), async (req, res) => {
 
         await req.Model.findByIdAndDelete(req.params.id)//删除
         res.send({
             success: true
         })//将结果发送到前端
     })
-    router.get('/', async (req, res, next) => {
-        console.log("aa" + req.headers.authorization)
-        const token = String(req.headers.authorization || '').split(' ').pop()
-        assert(token, 401, '请先登录')
-        const { id } = jwt.verify(token, app.get('secret'))
-        assert(id, 401, '无效的token')
-        req.user = await AdminUser.findById(id)
-        assert(req.user, 401, '请先登录')
-        await next()
-    }, async (req, res) => {
+
+    router.get('/', authMiddleware(), async (req, res) => {
         const queryOptions = {}
         if (req.Model.modelName === 'Category') {
             queryOptions.populate = 'parent'
@@ -46,15 +41,11 @@ module.exports = app => {
     })
 
     //资源详情
-    router.get('/:id', async (req, res) => {
+    router.get('/:id', authMiddleware(), async (req, res) => {
         const data = await req.Model.findById(req.params.id)//查询根据id
         res.send(data)//将结果发送到前端
     })
-    app.use('/admin/api/rest/:resource', async (req, res, next) => {
-        const modelName = require('inflection').classify(req.params.resource)
-        req.Model = require(`../../models/${modelName}`)
-        next()
-    }, router)
+    app.use('/admin/api/rest/:resource', authMiddleware(), resourceMiddleware(), router)
 
     const multer = require('multer')//将上传文件的数据赋值到req上
     const upload = multer({ dest: __dirname + '/../../uploads' })//当前文件所在文件夹
