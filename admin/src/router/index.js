@@ -113,9 +113,21 @@ const routes = [
     ]
   },
 ]
+//导航钩子
+
 
 const router = new VueRouter({
   routes
 })
+router.beforeEach((to, from, next) => {
+
+  let token = sessionStorage.getItem('token')
+  if (to.path === '/login' || token) {
+    next()
+  } else {
+   return next('/login')
+  }
+  next();
+});
 
 export default router
