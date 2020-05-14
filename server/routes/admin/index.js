@@ -49,7 +49,7 @@ module.exports = app => {
 
     const multer = require('multer')//将上传文件的数据赋值到req上
     const upload = multer({ dest: __dirname + '/../../uploads' })//当前文件所在文件夹
-    app.post('/admin/api/upload', upload.single('file'), async (req, res) => {
+    app.post('/admin/api/upload',  authMiddleware(),upload.single('file'), async (req, res) => {
         const file = req.file
         file.url = `http://localhost:3000/uploads/${file.filename}`
         res.send(file)

@@ -19,6 +19,7 @@
         <el-upload
           class="avatar-uploader"
           :action="$http.defaults.baseURL+'/upload'"
+          :headers="getAuthHeader()"
           :show-file-list="false"
           :on-success="handleAvatarSuccess"
         >

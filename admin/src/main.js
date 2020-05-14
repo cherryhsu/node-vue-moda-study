@@ -8,6 +8,27 @@ import http from './http'
 Vue.prototype.$http = http
 Vue.config.productionTip = false
 
+// Vue.mixin({
+//   methods: {
+//     getAuthHeader() {
+//       return {
+//         Authorization: `Bearer ${sessionStorage.token || ''}`
+//       }
+//     }
+//   }
+// })
+
+// 为自定义的选项 'myOption' 注入一个处理器。
+Vue.mixin({
+  methods: {
+    getAuthHeader() {
+      return {
+        Authorization: `Bearer ${sessionStorage.token || ''}`
+      }
+    }
+  }
+})
+
 new Vue({
   router,
   store,
