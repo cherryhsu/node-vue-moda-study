@@ -15,6 +15,7 @@
               class="avatar-uploader"
               :action="$http.defaults.baseURL+'/upload'"
               :show-file-list="false"
+               :headers="getAuthHeader()"
               :on-success="handleAvatarSuccess"
             >
               <img v-if="model.avatar" :src="model.avatar" class="avatar" />
@@ -83,10 +84,21 @@
                 <el-input v-model="item.name"></el-input>
               </el-form-item>
               <el-form-item label="图标">
+                <!-- <el-upload
+                  class="avatar-uploader"
+                  :action="$http.defaults.baseURL+'/upload'"
+                  :headers="getAuthHeader()"
+                  :show-file-list="false"
+                  :on-success="handleAvatarSuccess"
+                >
+                  <img v-if="model.icon" :src="model.icon" class="avatar" />
+                  <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                </el-upload> -->
                 <el-upload
                   class="avatar-uploader"
                   :action="$http.defaults.baseURL+'/upload'"
                   :show-file-list="false"
+                   :headers="getAuthHeader()"
                   :on-success="res=>$set(item,'icon',res.url)"
                 >
                   <img v-if="item.icon" :src="item.icon" class="avatar" />
@@ -145,6 +157,7 @@ export default {
       //this.$set(this.model, "avatar", res.url);
       this.model.avatar = res.url;
     },
+
     async save() {
       let res;
       if (this.id) {

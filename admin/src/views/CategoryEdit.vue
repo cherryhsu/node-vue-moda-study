@@ -3,7 +3,7 @@
     <h1>{{id?'编辑':'新建'}}分类</h1>
     <el-form label-width="120px">
       <el-form-item label="上级分类">
-        <el-select v-model="model.parent" placeholder="请选择">
+        <el-select v-model="model.parent" placeholder="请选择" clearable>
           <el-option
             v-for="item in parentOptions"
             :key="item._id"
